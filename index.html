@@ -25,7 +25,7 @@
 
       useEffect(() => {
         axios.get('/api/pets')
-          .then(response => setPets(response.data))
+          .then(response => setPets([...pets, JSON.parse(response.data)]))
       }, []);
 
 
@@ -33,10 +33,15 @@
         const data = {};
         data.pet = pet;
         data.breed = breed;
-        console.log(data)
 
         axios.post('/', JSON.stringify(data))
-          .then(response => setUsers([...users, response]))
+          .then(response => console.log(response.data))
+      }
+
+
+      const deletePet = () => {
+        const data = {};
+
       }
 
 
@@ -46,6 +51,7 @@
             <input type="text" value={pet} onChange={ev => setPet(ev.target.value)} />
             <input type="text" value={breed} onChange={ev => setBreed(ev.target.value)} />
             <button onClick={ev => postPet()}>Create Pet</button>
+            <button onClick={ev => deletePet()}>Delete Pet</button>
           </form>
           <ul>
             {pets.map((pet, idx) => {
